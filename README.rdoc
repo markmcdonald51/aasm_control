@@ -1,0 +1,52 @@
+= AASMControls => Simple aasm plugin extension for handling aasm states via jquery
+
+Helps with using AASM when you need to use it with a contoller. I really like AASM but hate writing controller code and
+jquery to assist in using it in views. For now, this seems to help. This is very beta and it is meant to be used with
+InheritedResources. 
+
+This plugin assumes you are using AASM (obviously) and a controller that is the plural name 
+of the model name...
+
+So if I had a model named Friendship the controller should be named FriendshipsController
+
+
+== Get it and Get going...
+  
+Install the plugin:
+
+  $ script/plugin install git://github.com/markmcdonald51/aasm_controls
+  
+  also install dom_id:
+  
+  $ script/plugin install git://github.com/nazgum/dom_id.git
+
+
+Add the member function to the routes.rb
+
+  map.resources :issues, :member => {:update_state => :get} do |issue|
+    issue.resources :interviews, :member => {:update_state => :get}
+
+
+Add this to you application.js file
+
+  $(document).ready(function() { 
+    $(".state_change_link").live('click', function(event){
+      $.get($(this).attr('href'), $(this).serialize(), null, "script");
+      return false;
+    });
+  });
+
+  
+== Example
+
+  class Friendship < ActiveRecord::Base  
+    belongs_to :user
+    belongs_to :friend, :class_name => 'User' 
+    acts_as_aasm_controls  # this does everything.
+  end
+  
+In your views use the helper to add in the jquery links to change state_change_link 
+
+  <%= aasm_state_links(resource) %>
+
+
