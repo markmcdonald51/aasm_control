@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    ./script/generate aasm_controls Thing
+
+    This will create:
+        what/will/it/create

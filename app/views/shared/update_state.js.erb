@@ -1,0 +1,2 @@
+/* Insert a notice between the last comment and the comment form */
+$(".state_change#<%=@resource.dom_id%>").html("<%=escape_javascript(aasm_state_links(@resource))%>");
